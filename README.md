@@ -16,4 +16,4 @@ http:localhost:8080
 
 ## Demo User
 
-Login : "demo" Password : "test"
+Login : demo Password : test
