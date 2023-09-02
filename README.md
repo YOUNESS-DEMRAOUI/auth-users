@@ -13,3 +13,7 @@ $ docker-compose up -d
 ## Link
 
 http:localhost:8080
+
+## Demo User
+
+Login : "demo" Password : "test"
