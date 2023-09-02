@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.active {
+  border-left: 3px solid #fec95c;
+  padding-left: 21px;
+  color: rgb(254, 201, 92);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #566688;
+  border-radius: 2px;
+}
+
+.css-1p3m7a8-multiValue {
+  background-color: white !important;
+}

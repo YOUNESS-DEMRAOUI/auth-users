@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  react:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+  auth-service:
+    build:
+      context: ./server/auth
+      dockerfile: Dockerfile
+    volumes:
+      - ./server/auth:/app:ro
+      - /app/node_modules
+    env_file: ./.env
+    depends_on:
+      - api-gateway
+  users-service:
+    build:
+      context: ./server/usersService
+      dockerfile: Dockerfile
+    volumes:
+      - ./server/usersService:/app:ro
+      - /app/node_modules
+    env_file: ./.env
+    depends_on:
+      - api-gateway
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    volumes:
+      - ./api-gateway:/app:ro
+      - /app/node_modules
+    env_file: ./.env
+    ports:
+      - "8000:8000"
+  mongodb:
+    image: mongo
+    volumes:
+      - mongodb:/data/db
+
+volumes:
+  mongodb:

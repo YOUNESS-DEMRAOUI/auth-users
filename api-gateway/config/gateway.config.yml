@@ -1,0 +1,63 @@
+http:
+  port: 8000
+apiEndpoints:
+  auth:
+    host: localhost
+    paths: /api/v1/auth*
+  user-service:
+    host: localhost
+    paths: /api/v1/users*
+serviceEndpoints:
+  auth:
+    url: "http://auth-service:3000"
+  user-service:
+    url: "http://users-service:4000"
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+  - jwt
+  - verify-roles
+  - request-transformer
+pipelines:
+  auth:
+    apiEndpoints:
+      - auth
+    policies:
+      - cors:
+          - action:
+              origin: http://localhost:8080
+              credentials: true
+      - proxy:
+          - action:
+              serviceEndpoint: auth
+              changeOrigin: true
+  user-service:
+    apiEndpoints:
+      - user-service
+    policies:
+      - cors:
+          - action:
+              origin: http://localhost:8080
+              credentials: true
+      - jwt:
+          action:
+            secretOrPublicKey: ${SECRET_KEY:-any}
+            checkCredentialExistence: false
+      - verify-roles:
+          action:
+            roles: ["Admin", "Super-Admin"]
+      - request-transformer:
+          - action:
+              body:
+                add:
+                  user: req.user
+      - proxy:
+          - action:
+              serviceEndpoint: user-service
+              changeOrigin: true
