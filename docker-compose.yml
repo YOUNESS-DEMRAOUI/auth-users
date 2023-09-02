@@ -11,7 +11,7 @@ services:
       context: ./server/auth
       dockerfile: Dockerfile
     volumes:
-      - ./server/auth:/app:ro
+      - ./server/auth:/app
       - /app/node_modules
     env_file: ./.env
     depends_on:
@@ -21,7 +21,7 @@ services:
       context: ./server/usersService
       dockerfile: Dockerfile
     volumes:
-      - ./server/usersService:/app:ro
+      - ./server/usersService:/app
       - /app/node_modules
     env_file: ./.env
     depends_on:
@@ -31,7 +31,7 @@ services:
       context: ./api-gateway
       dockerfile: Dockerfile
     volumes:
-      - ./api-gateway:/app:ro
+      - ./api-gateway:/app
       - /app/node_modules
     env_file: ./.env
     ports:
